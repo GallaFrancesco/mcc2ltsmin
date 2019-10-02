@@ -1,0 +1,9 @@
+name "ctlstar"
+description "An example parser for CTL* grammars"
+authors "fra"
+copyright "Copyright © 2019, fra"
+license "GPLv3"
+mainSourceFile "source/parser.d"
+dependency "pegged" version="~>0.4.4"
+
+targetType "executable"
