@@ -17,13 +17,12 @@ immutable string CTLStarGrammar = "
 
 		PathFormula <-  PathFormula AND PathFormula /
 						PathFormula OR PathFormula /
-					    NOT PathFormula /
+						NOT PathFormula /
 						NEXT PathFormula  /
 						GLOBALLY PathFormula /
 						FUTURE PathFormula /
 						PathFormula UNTIL PathFormula /
 						StateFormula
-
 
 		AtomicProp  <-  False /
 						True /
@@ -54,7 +53,7 @@ immutable string CTLStarGrammar = "
 
 		INEQ 		<-  space* INEQ_OP space*
 
-		INEQ_OP     <-  '==' / '<=' / '<' / '>=' / '>' / '!='
+		INEQ_OP 	<-  '==' / '<=' / '<' / '>=' / '>' / '!='
 
 		ALG_OP 		<-  space* ('*' / '/' / '+' / '-') space*
 
