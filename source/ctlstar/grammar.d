@@ -4,46 +4,53 @@ import pegged.grammar;
 
 mixin(grammar(CTLStarGrammar));
 
+/**
+ * POC of a CTL* parser
+ * --------------------
+ * Syntax: SYMBOL <- EXPANSION { ACTION }
+*/
 immutable string CTLStarGrammar = "
 	CTLStar:
 
-		StateFormula <- AtomicProp /
-						StateFormula AND StateFormula /
+		StateFormula <- StateFormula AND StateFormula /
 						StateFormula OR StateFormula /
 						NOT StateFormula /
 						EXISTS PathFormula /
 						ALWAYS PathFormula /
-						LPARENT StateFormula RPARENT
+						LPARENT StateFormula RPARENT /
+						AtomicProp
 
-		PathFormula <-  PathFormula AND PathFormula /
+		PathFormula <- 	PathFormula AND PathFormula /
 						PathFormula OR PathFormula /
 						NOT PathFormula /
 						NEXT PathFormula  /
 						GLOBALLY PathFormula /
 						FUTURE PathFormula /
 						PathFormula UNTIL PathFormula /
+						LPARENT PathFormula RPARENT /
 						StateFormula
 
-		AtomicProp  <-  False /
-						True /
-						Expression INEQ Expression
+		AtomicProp  <-	BasicExpr INEQ BasicExpr /
+						LPARENT AtomicProp RPARENT /
+		  				FALSE /
+						TRUE
 
-		Expression  <-  LPARENT Expression RPARENT /
+		BasicExpr 	<-  BasicExpr ALG_OP BasicExpr /
+						LPARENT BasicExpr RPARENT /
 						SHARP PlaceID /
-						NUMBER /
-						Expression ALG_OP Expression
+						NUMBER
 
-		EXISTS 		<-  'E'
+		EXISTS 		<-  space* 'E' space*
 
-		ALWAYS 		<-  'A'
+		ALWAYS 		<-  space* 'A' space*
 
-		GLOBALLY 	<-  'G'
+		GLOBALLY 	<-  space* 'G' space*
 
-		FUTURE 		<-  'F'
+		FUTURE 		<-  space* 'F' space*
 
-		NEXT 		<-  'N'
+		NEXT 		<-  space* 'X' space*
 
-		UNTIL 		<-  'U'
+		UNTIL 		<-  space* 'U' space*
 
 		AND 		<-  space* ('and' / '&&') space*
 
@@ -53,7 +60,7 @@ immutable string CTLStarGrammar = "
 
 		INEQ 		<-  space* INEQ_OP space*
 
-		INEQ_OP 	<-  '==' / '<=' / '<' / '>=' / '>' / '!='
+		INEQ_OP 	<-  space* ('==' / '<=' / '<' / '>=' / '>' / '!=') space*
 
 		ALG_OP 		<-  space* ('*' / '/' / '+' / '-') space*
 
@@ -67,7 +74,7 @@ immutable string CTLStarGrammar = "
 
 		PlaceID 	<-  identifier
 
-		True 		<-  'true'
+		TRUE 		<-  'true'
 
-		False 		<-  'false'
+		FALSE 		<-  'false'
 ";
