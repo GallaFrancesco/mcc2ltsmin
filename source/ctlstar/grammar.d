@@ -9,7 +9,7 @@ mixin(grammar(CTLStarGrammar));
  * --------------------
  * Syntax: SYMBOL <- EXPANSION { ACTION }
 */
-immutable string CTLStarGrammar = "
+immutable string CTLStarGrammar = `
 	CTLStar:
 
 		StateFormula <- StateFormula AND StateFormula /
@@ -31,13 +31,11 @@ immutable string CTLStarGrammar = "
 						StateFormula
 
 		AtomicProp  <-	BasicExpr INEQ BasicExpr /
-						LPARENT AtomicProp RPARENT /
-		  				FALSE /
-						TRUE
+						LPARENT AtomicProp RPARENT
 
 		BasicExpr 	<-  BasicExpr ALG_OP BasicExpr /
+						PlaceID /
 						LPARENT BasicExpr RPARENT /
-						SHARP PlaceID /
 						NUMBER
 
 		EXISTS 		<-  space* 'E' space*
@@ -72,9 +70,6 @@ immutable string CTLStarGrammar = "
 
 		SHARP 		<-  '#'
 
-		PlaceID 	<-  identifier
+		PlaceID 	<-  doublequote identifier doublequote
 
-		TRUE 		<-  'true'
-
-		FALSE 		<-  'false'
-";
+`;
