@@ -12,5 +12,5 @@ void main(string[] args)
 	}
 
 	// parse and dump parse tree
-	writeln(parse(args[1]));
+	parse(args[1]);
 }

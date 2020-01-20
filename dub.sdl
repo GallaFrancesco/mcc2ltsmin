@@ -1,5 +1,5 @@
-name "ctlstar"
-description "An example parser for CTL* grammars"
+name "mcc2ltsmin"
+description "An MCC->LTSmin syntax translator for CTL* grammars"
 authors "fra"
 copyright "Copyright © 2019, fra"
 license "GPLv3"
@@ -7,4 +7,3 @@ mainSourceFile "source/main.d"
 dependency "pegged" version="~>0.4.4"
 
 targetType "executable"
-subConfiguration "pegged" "tracer"

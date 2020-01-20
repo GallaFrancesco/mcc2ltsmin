@@ -1,6 +1,9 @@
 module ctlstar.grammar;
 
 import pegged.grammar;
+import core.stdc.stdio;
+import std.string;
+import std.stdio;
 
 mixin(grammar(CTLStarGrammar));
 
@@ -38,38 +41,39 @@ immutable string CTLStarGrammar = `
 						LPARENT BasicExpr RPARENT /
 						NUMBER
 
-		EXISTS 		<-  space* 'E' space*
+		EXISTS 		<-  space* 'E' space* { (p) { printf(" E "); return p; }}
 
-		ALWAYS 		<-  space* 'A' space*
+		ALWAYS 		<-  space* 'A' space* { (p) { printf(" A "); return p; }}
 
-		GLOBALLY 	<-  space* 'G' space*
+		GLOBALLY 	<-  space* 'G' space* { (p) { printf(" [] "); return p; }}
 
-		FUTURE 		<-  space* 'F' space*
+		FUTURE 		<-  space* 'F' space* { (p) { printf(" <> "); return p; }}
 
-		NEXT 		<-  space* 'X' space*
+		NEXT 		<-  space* 'X' space* { (p) { printf(" X "); return p; }}
 
-		UNTIL 		<-  space* 'U' space*
+		UNTIL 		<-  space* 'U' space* { (p) { printf(" U "); return p; }}
 
-		AND 		<-  space* ('and' / '&&') space*
+		AND 		<-  space* ('and' / '&&') space* { (p) {printf(" && "); return p; }}
 
-		OR 			<-  space* ('or' / '||') space*
+		OR 			<-  space* ('or' / '||') space* { (p) {printf(" || "); return p; }}
 
-		NOT 		<-  ('not' / '!') space*
+		NOT 		<-  ('not' / '!') space* { (p) {printf(" ! "); return p; }}
 
-		INEQ 		<-  space* INEQ_OP space*
+		INEQ 		<-  space* INEQ_OP space* 
 
-		INEQ_OP 	<-  space* ('==' / '<=' / '<' / '>=' / '>' / '!=') space*
+		INEQ_OP 	<-  space* ('==' / '<=' / '<' / '>=' / '>' / '!=') space* { (p) { printf(" %s ", p.input[p.begin-2..p.end].toStringz()); return p; }}
 
-		ALG_OP 		<-  space* ('*' / '/' / '+' / '-') space*
+		ALG_OP 		<-  space* ('*' / '/' / '+' / '-') space* { (p) { printf(" %s ", p.input[p.begin-1..p.end].toStringz()); return p; }}
 
-		LPARENT 	<-  space* '(' space*
+		LPARENT 	<-  space* '(' space* { (p) { printf(" %s ", p.input[p.begin-1..p.end].toStringz()); return p; }}
 
-		RPARENT 	<-  space* ')' space*
+		RPARENT 	<-  space* ')' space* { (p) { printf(" %s ", p.input[p.begin-1..p.end].toStringz()); return p; }}
 
-		NUMBER 		<-  ~([0-9]+)
+		NUMBER 		<-  ~([0-9]+) { (p) { printf(" %s ", p.input[p.begin..p.end].toStringz()); return p; }}
 
 		SHARP 		<-  '#'
 
-		PlaceID 	<-  doublequote identifier doublequote
+		PlaceID 	<-  doublequote ID doublequote 
 
+        ID          <-  identifier { (p) { printf(" %s ", p.input[p.begin..p.end].toStringz()); return p; }}
 `;
