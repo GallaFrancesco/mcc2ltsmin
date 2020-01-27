@@ -4,6 +4,7 @@ import ctlstar.parser;
 
 import std.stdio;
 import std.string;
+import core.stdc.stdio;
 
 int main(string[] args)
 {
@@ -21,5 +22,7 @@ int main(string[] args)
     }
 
 	auto pt = parse(formula);
+    if(!pt.successful) writeln(pt);
+    else printf("\n");
     return !pt.successful;
 }

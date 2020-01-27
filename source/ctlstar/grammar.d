@@ -18,30 +18,23 @@ mixin(grammar(CTLStarFuzzer));
 immutable string CTLStarGrammar = `
 	CTLStar:
 
-		StateFormula <- StateFormula AND StateFormula /
-						StateFormula OR StateFormula /
-						NOT StateFormula /
-						EXISTS PathFormula /
-						ALWAYS PathFormula /
-						LPARENT StateFormula RPARENT /
-						AtomicProp
+		StateFormula <- AtomicProp /
+                        StateFormula AND StateFormula /
+                        StateFormula OR StateFormula /
+                        NOT StateFormula /
+						EXISTS StateFormula /
+						ALWAYS StateFormula /
+						NEXT StateFormula  /
+						GLOBALLY StateFormula /
+						FUTURE StateFormula /
+						StateFormula UNTIL StateFormula /
+						LPARENT StateFormula RPARENT 
 
-		PathFormula <- 	PathFormula AND PathFormula /
-						PathFormula OR PathFormula /
-						NOT PathFormula /
-						NEXT PathFormula  /
-						GLOBALLY PathFormula /
-						FUTURE PathFormula /
-						PathFormula UNTIL PathFormula /
-						LPARENT PathFormula RPARENT /
-						StateFormula
-
-		AtomicProp  <-	BasicExpr INEQ BasicExpr /
-						LPARENT AtomicProp RPARENT
+		AtomicProp  <-  BasicExpr INEQ BasicExpr
 
 		BasicExpr 	<-  BasicExpr ALG_OP BasicExpr /
-						PlaceID /
 						LPARENT BasicExpr RPARENT /
+						PlaceID /
 						NUMBER
 
 		EXISTS 		<-  space* 'E' space* { (p) { printf(" E "); return p; }}
@@ -103,30 +96,23 @@ auto fuzz_quantifier(PT)(PT pt)
 immutable string CTLStarFuzzer = `
 	CTLStarFuzz:
 
-		StateFormula <- StateFormula AND StateFormula /
-						StateFormula OR StateFormula /
-						NOT StateFormula /
-						EXISTS PathFormula /
-						ALWAYS PathFormula /
-						LPARENT StateFormula RPARENT /
-						AtomicProp
+		StateFormula <- AtomicProp /
+                        StateFormula AND StateFormula /
+                        StateFormula OR StateFormula /
+                        NOT StateFormula /
+						EXISTS StateFormula /
+						ALWAYS StateFormula /
+						NEXT StateFormula  /
+						GLOBALLY StateFormula /
+						FUTURE StateFormula /
+						StateFormula UNTIL StateFormula /
+						LPARENT StateFormula RPARENT 
 
-		PathFormula <- 	PathFormula AND PathFormula /
-						PathFormula OR PathFormula /
-						NOT PathFormula /
-						NEXT PathFormula  /
-						GLOBALLY PathFormula /
-						FUTURE PathFormula /
-						PathFormula UNTIL PathFormula /
-						LPARENT PathFormula RPARENT /
-						StateFormula
-
-		AtomicProp  <-	BasicExpr INEQ BasicExpr /
-						LPARENT AtomicProp RPARENT
+		AtomicProp  <-  BasicExpr INEQ BasicExpr
 
 		BasicExpr 	<-  BasicExpr ALG_OP BasicExpr /
-						PlaceID /
 						LPARENT BasicExpr RPARENT /
+						PlaceID /
 						NUMBER
 
 		EXISTS 		<-  space* E space* 
