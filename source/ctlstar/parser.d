@@ -24,6 +24,12 @@ auto parse(immutable string formula)
 	return pt;
 }
 
+auto fuzz(immutable string formula)
+{
+    auto pt = CTLStarFuzz(formula);
+    return pt;
+}
+
 unittest {
 	bool parseOK(immutable string formula) {
 		import std.stdio;

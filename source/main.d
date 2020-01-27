@@ -3,6 +3,7 @@ module main;
 import ctlstar.parser;
 
 import std.stdio;
+import std.string;
 
 void main(string[] args)
 {
@@ -11,6 +12,8 @@ void main(string[] args)
 		return;
 	}
 
-	// parse and dump parse tree
-	parse(args[1]);
+    string fuzzed = fuzz(args[1]).matches.join();
+    writeln(fuzzed);
+
+	auto pt = parse(fuzzed);
 }
