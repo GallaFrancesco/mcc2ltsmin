@@ -81,10 +81,16 @@ immutable string CTLStarGrammar = `
         ID          <-  identifier { (p) { printf(" %s ", p.input[p.begin..p.end].toStringz()); return p; }}
 `;
 
+bool isFirstQuantifier = true;
+
 auto fuzz_quantifier(PT)(PT pt)
 {
-    if(pt.begin > 0 && pt.begin < pt.end) {
-
+    if(pt.begin < pt.end) {
+        // it should NEVER remove the first quantifier.
+        if(isFirstQuantifier) {
+            isFirstQuantifier = false;
+            return pt;
+        }
         Mt19937 rng;
         rng.seed(unpredictableSeed);
         bool pdel = cast(bool)dice(rng, 40, 60); // 40% false, 60% true
