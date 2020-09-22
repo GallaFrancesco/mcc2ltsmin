@@ -9,7 +9,7 @@ import core.stdc.stdio;
 int main(string[] args)
 {
 	if(args.length < 2 && args.length > 3) {
-		writeln("Usage: ./ctlstar [--fuzz] \"[formula]\"");
+		writeln("Usage: ./mcc2ltsmin [--fuzz] \"[formula]\"");
 		return 0;
 	}
 
