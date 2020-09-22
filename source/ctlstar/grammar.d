@@ -86,7 +86,7 @@ auto fuzz_quantifier(PT)(PT pt)
         }
         Mt19937 rng;
         rng.seed(unpredictableSeed);
-        bool pdel = cast(bool)dice(rng, 40, 60); // 40% false, 60% true
+        bool pdel = cast(bool)dice(rng, 30, 70); // 30% false, 70% true
         if(pdel) pt.matches = [];
     }
 
