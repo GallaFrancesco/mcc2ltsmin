@@ -7,12 +7,12 @@ Convert query from MCC syntax to LTSmin syntax. Used to test and compare GreatSP
 Simple translation (output is the translated query on a line to stdout).
 
 ```
-./mcc2ltsmin '[query]'
+mcc2ltsmin '[query]'
 ```
 
 Query fuzzing (output is the fuzzed query in MCC format and the fuzzed, translated query; two lines to stdout).
 ```
-./mcc2ltsmin --fuzz '[query]'
+mcc2ltsmin --fuzz '[query]'
 ```
 
 ## Building
