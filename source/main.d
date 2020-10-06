@@ -8,7 +8,7 @@ import core.stdc.stdio;
 
 int main(string[] args)
 {
-	if(args.length < 2 && args.length > 3) {
+	if(args.length < 2 || args.length > 3) {
 		writeln("Usage: ./mcc2ltsmin [--fuzz] \"[formula]\"");
 		return 0;
 	}
